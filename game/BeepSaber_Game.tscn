@@ -1,0 +1,208 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://game/BeepCube_Cut.material" type="Material" id=1]
+[ext_resource path="res://OQ_Toolkit/OQ_UI2D/OQ_UI2DLabel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://OQ_Toolkit/OQ_UI2D/OQ_UI2DCanvas.tscn" type="PackedScene" id=3]
+[ext_resource path="res://OQ_Toolkit/OQ_ARVROrigin.tscn" type="PackedScene" id=4]
+[ext_resource path="res://OQ_Toolkit/OQ_ARVRCamera.tscn" type="PackedScene" id=5]
+[ext_resource path="res://OQ_Toolkit/OQ_ARVROrigin/Feature_VRSimulator.tscn" type="PackedScene" id=6]
+[ext_resource path="res://OQ_Toolkit/OQ_LeftController.tscn" type="PackedScene" id=7]
+[ext_resource path="res://OQ_Toolkit/OQ_RightController.tscn" type="PackedScene" id=8]
+[ext_resource path="res://game/BeepSaber_Game.gd" type="Script" id=9]
+[ext_resource path="res://game/LightSaber.tscn" type="PackedScene" id=10]
+[ext_resource path="res://game/BeepSaberMainMenu.tscn" type="PackedScene" id=11]
+[ext_resource path="res://OQ_Toolkit/OQ_ARVRController/Feature_UIRayCast.tscn" type="PackedScene" id=12]
+[ext_resource path="res://game/event_driver.tscn" type="PackedScene" id=13]
+[ext_resource path="res://game/background_sky.tres" type="PanoramaSky" id=14]
+[ext_resource path="res://OQ_Toolkit/OQ_ARVROrigin/Feature_MixedRealityCapture.tscn" type="PackedScene" id=15]
+[ext_resource path="res://game/PercentIndicator.tscn" type="PackedScene" id=16]
+[ext_resource path="res://game/EndScore_panel.tscn" type="PackedScene" id=17]
+[ext_resource path="res://game/Pause_Panel.tscn" type="PackedScene" id=18]
+[ext_resource path="res://game/settings_Panel.tscn" type="PackedScene" id=19]
+[ext_resource path="res://game/Online_library_Panel.tscn" type="PackedScene" id=20]
+[ext_resource path="res://OQ_Toolkit/OQ_UI2D/OQ_UI2DKeyboard.tscn" type="PackedScene" id=21]
+[ext_resource path="res://game/Points_label_driver.tscn" type="PackedScene" id=22]
+
+[sub_resource type="Environment" id=1]
+background_mode = 3
+background_sky = ExtResource( 14 )
+glow_enabled = true
+glow_intensity = 0.22
+glow_strength = 1.41
+glow_blend_mode = 0
+
+[sub_resource type="SphereShape" id=2]
+radius = 0.07
+
+[sub_resource type="BoxShape" id=3]
+
+[sub_resource type="PlaneMesh" id=4]
+size = Vector2( 0.5, 0.5 )
+
+[node name="BeepSaber" type="Spatial"]
+script = ExtResource( 9 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=[
+"enviroment",
+]]
+environment = SubResource( 1 )
+
+[node name="SongPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="OQ_ARVROrigin" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+
+[node name="OQ_ARVRCamera" parent="OQ_ARVROrigin" instance=ExtResource( 5 )]
+far = 1024.0
+
+[node name="PlayerHead" type="Area" parent="OQ_ARVROrigin/OQ_ARVRCamera"]
+
+[node name="CollisionShape" type="CollisionShape" parent="OQ_ARVROrigin/OQ_ARVRCamera/PlayerHead"]
+shape = SubResource( 2 )
+
+[node name="OQ_LeftController" parent="OQ_ARVROrigin" instance=ExtResource( 7 )]
+autoload_model = false
+
+[node name="LeftLightSaber" parent="OQ_ARVROrigin/OQ_LeftController" instance=ExtResource( 10 )]
+
+[node name="OQ_RightController" parent="OQ_ARVROrigin" instance=ExtResource( 8 )]
+autoload_model = false
+
+[node name="RightLightSaber" parent="OQ_ARVROrigin/OQ_RightController" instance=ExtResource( 10 )]
+
+[node name="Feature_UIRayCast" parent="OQ_ARVROrigin/OQ_RightController" instance=ExtResource( 12 )]
+transform = Transform( 1, 0, 0, 0, 0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0 )
+ui_raycast_length = 5.0
+adjust_left_right = false
+ui_raycast_visible_button = -1
+
+[node name="Feature_VRSimulator" parent="OQ_ARVROrigin" instance=ExtResource( 6 )]
+
+[node name="Feature_MixedRealityCapture" parent="OQ_ARVROrigin" instance=ExtResource( 15 )]
+
+[node name="Track" type="Spatial" parent="."]
+
+[node name="StandingGround" type="StaticBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1 )
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape" type="CollisionShape" parent="StandingGround"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0 )
+shape = SubResource( 3 )
+
+[node name="Spatial" type="Spatial" parent="StandingGround"]
+transform = Transform( 4, 0, 0, 0, 1, 0, 0, 0, 4, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="StandingGround/Spatial"]
+mesh = SubResource( 4 )
+material/0 = ExtResource( 1 )
+
+[node name="event_driver" parent="." instance=ExtResource( 13 )]
+game = NodePath("..")
+
+[node name="MainMenu_OQ_UI2DCanvas" parent="." instance=ExtResource( 3 )]
+transform = Transform( 2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 1.5, -1 )
+editor_live_update = false
+transparent = false
+
+[node name="BeepSaberMainMenu" parent="MainMenu_OQ_UI2DCanvas" instance=ExtResource( 11 )]
+keyboard = NodePath("../../OQ_UI2DKeyboard_main")
+
+[node name="Multiplier_Label" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 1, -1.55441, 1.30572, -2.69107 )
+text = "Multiplier"
+margin = 0
+billboard = false
+depth_test = true
+resize_mode = 0
+font_size_multiplier = 1.0
+font_color = Color( 1, 1, 1, 1 )
+background_color = Color( 0, 0, 0, 0 )
+transparent = true
+
+[node name="Point_Label" parent="." instance=ExtResource( 2 )]
+transform = Transform( 4, 0, 0, 0, 4, 0, 0, 0, 1, 1.47323, 1.30572, -2.69107 )
+text = "Score"
+margin = 0
+billboard = false
+depth_test = true
+resize_mode = 0
+font_size_multiplier = 1.0
+font_color = Color( 1, 1, 1, 1 )
+background_color = Color( 0, 0, 0, 0 )
+transparent = true
+
+[node name="Percent" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5455, 0.895287, -2.54167 )
+editor_live_update = false
+transparent = true
+
+[node name="percent_indicator" parent="Percent" instance=ExtResource( 16 )]
+
+[node name="EndScore_canvas" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1.91111, 0, 0, 0, 1.91111, 0, 0, 0, 1.91111, 0, 1.431, -0.777581 )
+visible = false
+editor_live_update = false
+transparent = false
+
+[node name="EndScore_panel" parent="EndScore_canvas" instance=ExtResource( 17 )]
+
+[node name="PauseMenu_canvas" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1.86849, 0, 0, 0, 1.86849, 0, 0, 0, 1.86849, 0, 1.43532, -0.756856 )
+visible = false
+editor_live_update = false
+transparent = false
+
+[node name="Pause_Panel" parent="PauseMenu_canvas" instance=ExtResource( 18 )]
+
+[node name="Pause_countdown" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.49382, -0.649511 )
+visible = false
+text = "3"
+margin = 16
+billboard = false
+depth_test = true
+resize_mode = 0
+font_size_multiplier = 4.587
+font_color = Color( 1, 1, 1, 1 )
+background_color = Color( 0, 0, 0, 1 )
+transparent = false
+
+[node name="Settings_canvas" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1.14193, 0, 2.01698, 0, 2.3178, 0, -2.01698, 0, 1.14193, -2.44264, 1.51576, -0.0546236 )
+editor_live_update = false
+transparent = false
+
+[node name="settings_Panel" parent="Settings_canvas" instance=ExtResource( 19 )]
+game = NodePath("../..")
+
+[node name="Online_library" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.67553, 0, -1.82835, 0, 1.94915, 0, 1.82835, 0, 0.67553, 2.433, 1.49752, 0.468348 )
+editor_live_update = false
+transparent = false
+
+[node name="Online_library_Panel" parent="Online_library" instance=ExtResource( 20 )]
+game = NodePath("../..")
+keyboard = NodePath("../../OQ_UI2DKeyboard")
+
+[node name="OQ_UI2DKeyboard" parent="." instance=ExtResource( 21 )]
+transform = Transform( 0.838233, 0.349429, -2.22632, 0, 2.37535, 0.372819, 2.25358, -0.129972, 0.828095, 2.09772, 0.833935, 0.302276 )
+visible = false
+
+[node name="OQ_UI2DKeyboard_main" parent="." instance=ExtResource( 21 )]
+transform = Transform( 2.40442, 0, 0, 0, 2.37659, 0.364816, 0, -0.364816, 2.37659, -0.1298, 0.867922, -0.626283 )
+visible = false
+
+[node name="Points_label_driver" parent="." instance=ExtResource( 22 )]
+
+[node name="RigidBody" type="RigidBody" parent="."]
+[connection signal="area_entered" from="OQ_ARVROrigin/OQ_ARVRCamera/PlayerHead" to="." method="_on_PlayerHead_area_entered"]
+[connection signal="area_exited" from="OQ_ARVROrigin/OQ_ARVRCamera/PlayerHead" to="." method="_on_PlayerHead_area_exited"]
+[connection signal="area_entered" from="OQ_ARVROrigin/OQ_LeftController/LeftLightSaber" to="." method="_on_LeftLightSaber_area_entered"]
+[connection signal="area_entered" from="OQ_ARVROrigin/OQ_RightController/RightLightSaber" to="." method="_on_RightLightSaber_area_entered"]
+[connection signal="goto_mainmenu" from="EndScore_canvas/EndScore_panel" to="." method="_on_EndScore_panel_goto_mainmenu"]
+[connection signal="repeat" from="EndScore_canvas/EndScore_panel" to="." method="_on_EndScore_panel_repeat"]
+[connection signal="continue_button" from="PauseMenu_canvas/Pause_Panel" to="." method="_on_Pause_Panel_continue_button"]
+[connection signal="mainmenu_button" from="PauseMenu_canvas/Pause_Panel" to="." method="_on_EndScore_panel_goto_mainmenu"]
+[connection signal="restart_button" from="PauseMenu_canvas/Pause_Panel" to="." method="_on_EndScore_panel_repeat"]

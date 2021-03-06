@@ -1,0 +1,251 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://OQ_Toolkit/OQ_UI2D/theme/oq_ui2d_standard.theme" type="Theme" id=1]
+[ext_resource path="res://game/data/beepsaber_logo.png" type="Texture" id=2]
+[ext_resource path="res://game/BeepSaberMainMenu.gd" type="Script" id=3]
+[ext_resource path="res://game/data/maps/Songs/TheFatRat_Timelapse/cover.jpg" type="Texture" id=4]
+[ext_resource path="res://OQ_Toolkit/OQ_UI2D/theme/RobotoMono-Medium.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://game/vr_slider.gd" type="Script" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.14902, 0.14902, 0.14902, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.270588, 0.270588, 0.270588, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.270588, 0.270588, 0.270588, 1 )
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 35
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=7]
+default_font = SubResource( 6 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0, 0, 0, 1 )
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color( 1, 1, 1, 1 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 28
+font_data = ExtResource( 5 )
+
+[sub_resource type="Theme" id=10]
+default_font = SubResource( 9 )
+
+[node name="BeepSaberMainMenu" type="Panel"]
+margin_right = 1408.0
+margin_bottom = 640.0
+theme = ExtResource( 1 )
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="beepsaber_logo" type="Sprite" parent="."]
+position = Vector2( 1158, 521.344 )
+scale = Vector2( 0.84375, 0.84375 )
+texture = ExtResource( 2 )
+
+[node name="Play_Button" type="Button" parent="."]
+margin_left = 448.0
+margin_top = 576.0
+margin_right = 848.0
+margin_bottom = 624.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Play"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Delete_Button" type="Button" parent="."]
+margin_left = 864.0
+margin_top = 448.0
+margin_right = 1040.0
+margin_bottom = 496.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 4 )
+disabled = true
+text = "Delete"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit_Button" type="Button" parent="."]
+margin_left = 1277.52
+margin_top = 576.0
+margin_right = 1389.52
+margin_bottom = 624.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Search_Button" type="Button" parent="."]
+margin_left = 19.0
+margin_top = 13.0
+margin_right = 131.0
+margin_bottom = 56.0
+rect_pivot_offset = Vector2( -937.032, -176 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Search"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Search_Button"]
+margin_left = 117.0
+margin_top = 3.0
+margin_right = 167.0
+margin_bottom = 36.0
+
+[node name="cover" type="TextureRect" parent="."]
+margin_left = 1050.0
+margin_top = 67.0
+margin_right = 1390.0
+margin_bottom = 320.0
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SongInfo_Label" type="Label" parent="."]
+margin_left = 864.0
+margin_top = 320.0
+margin_right = 1328.0
+margin_bottom = 448.0
+text = "Song Author: TheFatRat
+Song Title: Time Lapse
+Beatmap Author: Timeweaver"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SongsMenu" type="ItemList" parent="."]
+margin_left = 16.0
+margin_top = 64.0
+margin_right = 848.0
+margin_bottom = 560.0
+theme = SubResource( 7 )
+custom_styles/bg = SubResource( 8 )
+custom_colors/font_color_selected = Color( 1, 0.494118, 0.494118, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+fixed_icon_size = Vector2( 60, 60 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DifficultyMenu" type="ItemList" parent="."]
+margin_left = 864.0
+margin_top = 64.0
+margin_right = 1040.0
+margin_bottom = 320.0
+theme = SubResource( 10 )
+custom_styles/bg = SubResource( 8 )
+custom_colors/font_color_selected = Color( 1, 0.494118, 0.494118, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+download_chunk_size = 65536
+timeout = 4
+
+[node name="Songs_Label" type="Label" parent="."]
+margin_left = 131.0
+margin_top = 16.0
+margin_right = 848.0
+margin_bottom = 64.0
+text = "Songs"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Songs_Label2" type="Label" parent="."]
+margin_left = 864.0
+margin_top = 16.0
+margin_right = 1040.0
+margin_bottom = 64.0
+text = "Difficulty"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LoadPlaylists_Button" type="Button" parent="."]
+margin_left = 16.0
+margin_top = 576.0
+margin_right = 432.0
+margin_bottom = 624.0
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/normal = SubResource( 4 )
+text = "Refresh Songs/Playlists"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="song_prev" type="AudioStreamPlayer" parent="."]
+[connection signal="pressed" from="Play_Button" to="." method="_on_Play_Button_pressed"]
+[connection signal="button_up" from="Delete_Button" to="." method="_on_Delete_Button_button_up"]
+[connection signal="pressed" from="Exit_Button" to="." method="_on_Exit_Button_pressed"]
+[connection signal="button_up" from="Search_Button" to="." method="_on_Search_Button_button_up"]
+[connection signal="item_selected" from="SongsMenu" to="." method="_select_song"]
+[connection signal="item_selected" from="DifficultyMenu" to="." method="_select_difficulty"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_HTTPRequest_request_completed"]
+[connection signal="pressed" from="LoadPlaylists_Button" to="." method="_on_LoadPlaylists_Button_pressed"]
